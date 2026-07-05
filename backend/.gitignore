@@ -1,0 +1,26 @@
+# 虛擬環境
+venv/
+.venv/
+
+# 環境變數
+.env
+
+# Python 編譯檔
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 測試覆蓋率
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Alembic (只忽略本機產生的暫存，版本要進git)
+alembic/versions/*.pyc
