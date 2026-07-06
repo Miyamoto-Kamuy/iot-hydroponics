@@ -2,6 +2,8 @@ from sqlalchemy.orm import Session
 from app.core.exceptions import not_found, forbidden
 from app.models import Device, User
 from app.schemas.device import DeviceCreate, DevicePatch
+from typing import Literal
+from datetime import datetime
 
 def _get_device_or_404(
     id: int,
@@ -22,13 +24,32 @@ def _check_device_owner(
 
 def get_all_devices(
     user: User, 
-    db: Session
+    db: Session, 
+    location: str | None = None,
+    status: Literal["offline", "online"] | None = None,
+    start: datetime | None = None,
+    end: datetime | None = None,
+    created_by: int | None = None,
 ):
-    if user.role == "admin":
-        return db.query(Device).all()
-    return db.query(Device).filter(
-        Device.created_by == user.id
-    ).all()
+    query = db.query(Device)
+
+    if user.role != "admin":
+        query = query.filter(
+            Device.created_by == user.id            
+        )
+    elif created_by:
+        query = query.filter(
+            Device.created_by == created_by
+        )
+    if location:
+        query = query.filter(Device.location == location)
+    if status:
+        query = query.filter(Device.status == status)
+    if start:
+        query = query.filter(Device.created_at >= start)
+    if end:
+        query = query.filter(Device.created_at <= end)
+    return query.all()
 
 def get_device_by_id(
     id: int, 

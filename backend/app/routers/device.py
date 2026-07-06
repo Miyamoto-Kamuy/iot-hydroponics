@@ -6,6 +6,8 @@ from app.schemas.device import DeviceResponse, DeviceCreate, DevicePatch
 from app.services.device import get_all_devices, get_device_by_id, create_device as create_device_service, update_device as update_device_service, delete_device as delete_device_service
 from app.core.deps import get_current_user, require_role
 from app.models import User, Device
+from typing import Literal
+from datetime import datetime
 
 router = APIRouter(prefix="/devices", tags=["devices"])
 all_users = require_role("admin", "operator", "viewer")
@@ -18,9 +20,14 @@ admin_operator = require_role("admin", "operator")
 ) 
 def get_devices(
     user: User = Depends(get_current_user),     
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db), 
+    location: str | None = None,
+    status: Literal["offline", "online"] | None = None,
+    start: datetime | None = None,
+    end: datetime | None = None,
+    created_by: int | None = None,
 ):
-    return get_all_devices(user, db)
+    return get_all_devices(user, db, location, status, start, end, created_by)
 
 @router.get(
     "/{id}",
