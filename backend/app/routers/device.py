@@ -10,9 +10,6 @@ from typing import Literal
 from datetime import datetime
 
 router = APIRouter(prefix="/devices", tags=["devices"])
-all_users = require_role("admin", "operator", "viewer")
-only_admin = require_role("admin")
-admin_operator = require_role("admin", "operator")
 
 @router.get(
     "/",
