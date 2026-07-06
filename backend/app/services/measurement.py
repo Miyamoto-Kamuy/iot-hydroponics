@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from app.core.exceptions import not_found, forbidden
 from app.models import Measurement, User, Device
-from app.schemas.measurement import MeasurementResponse
 from datetime import datetime
 from app.services.device import _get_device_or_404
 
