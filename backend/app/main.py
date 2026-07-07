@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth, device, measurement, websocket, alert
+from app.routers import auth, device, measurement, websocket, alert, audit_log
 from app.middleware.audit import AuditMiddleware
 
 app = FastAPI(
@@ -22,6 +22,7 @@ app.include_router(device.router)
 app.include_router(measurement.router)
 app.include_router(websocket.router)
 app.include_router(alert.router)
+app.include_router(audit_log.router)
 
 @app.get("/health")
 def health_check():
