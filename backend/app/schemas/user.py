@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Literal
+from typing import Literal, Optional
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -24,3 +24,9 @@ class LoginResponse(BaseModel):
     access_token: str
     token_type: str
     expires_in: int
+
+class UserPatch(BaseModel):    
+    password: Optional[str] = None    
+
+class UserAdminPatch(BaseModel):
+    role: Optional[Literal["admin", "operator", "viewer"]] = None
