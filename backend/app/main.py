@@ -1,7 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+
 from app.routers import auth, device, measurement, websocket, alert, audit_log
 from app.middleware.audit import AuditMiddleware
+from app.core.limiter import limiter
+
 
 app = FastAPI(
     title="IoT Hydroponics Monitor", 
@@ -23,6 +28,9 @@ app.include_router(measurement.router)
 app.include_router(websocket.router)
 app.include_router(alert.router)
 app.include_router(audit_log.router)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 @app.get("/health")
 def health_check():
