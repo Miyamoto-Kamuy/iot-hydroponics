@@ -2,6 +2,7 @@ from app.database import Base
 from sqlalchemy import Column, Integer, String, TIMESTAMP, ForeignKey
 from sqlalchemy.sql import text
 from sqlalchemy.orm import relationship
+from datetime import datetime, timezone
 
 class Device(Base):
     __tablename__= "devices"
@@ -14,9 +15,14 @@ class Device(Base):
         TIMESTAMP(timezone=True), 
         nullable=True
     )
+    # created_at=Column(
+    #     TIMESTAMP(timezone=True), 
+    #     server_default=text('now()'), 
+    #     nullable=False
+    # )
     created_at=Column(
         TIMESTAMP(timezone=True), 
-        server_default=text('now()'), 
+        default=lambda: datetime.now(timezone.utc),
         nullable=False
     )
     created_by = Column(Integer, ForeignKey("users.id") , nullable=False)
