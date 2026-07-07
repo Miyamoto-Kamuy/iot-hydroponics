@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, device, measurement, websocket, alert
+from app.middleware.audit import AuditMiddleware
 
 app = FastAPI(
     title="IoT Hydroponics Monitor", 
@@ -14,6 +15,7 @@ app.add_middleware(
     allow_methods=["*"], 
     allow_headers=["*"]
 )
+app.add_middleware(AuditMiddleware)
 
 app.include_router(auth.router)
 app.include_router(device.router)
