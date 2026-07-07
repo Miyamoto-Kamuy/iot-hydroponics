@@ -9,14 +9,16 @@ class AuditLog(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     action=Column(String, nullable=False)
     resource=Column(String, nullable=False)
-    resource_id = Column(Integer, nullable=False)
-    detail = Column(JSON, nullable=False)
+    resource_id = Column(Integer, nullable=True)
+    detail = Column(JSON, nullable=True)
+    status_code = Column(Integer, nullable=False)
+    error_detail = Column(String, nullable=True)
     performed_at=Column(
         TIMESTAMP(timezone=True), 
         server_default=text('now()'), 
         nullable=False
     )    
-    performed_by = Column(Integer, ForeignKey("users.id") , nullable=False)
+    performed_by = Column(Integer, ForeignKey("users.id") , nullable=True)
     user=relationship(
         "User", 
         back_populates="audit_logs"
