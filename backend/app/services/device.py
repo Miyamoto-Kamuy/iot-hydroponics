@@ -4,6 +4,7 @@ from app.models import Device, User
 from app.schemas.device import DeviceCreate, DevicePatch
 from typing import Literal
 from datetime import datetime
+from app.core.pagination import paginate
 
 def _get_device_or_404(
     id: int,
@@ -30,6 +31,8 @@ def get_all_devices(
     start: datetime | None = None,
     end: datetime | None = None,
     created_by: int | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ):
     query = db.query(Device)
 
@@ -49,7 +52,8 @@ def get_all_devices(
         query = query.filter(Device.created_at >= start)
     if end:
         query = query.filter(Device.created_at <= end)
-    return query.all()
+    
+    return paginate(query, page, size)
 
 def get_device_by_id(
     id: int, 

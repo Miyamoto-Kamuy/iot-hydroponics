@@ -3,6 +3,7 @@ from app.core.exceptions import not_found, forbidden
 from app.models import Measurement, User, Device
 from datetime import datetime
 from app.services.device import _get_device_or_404
+from app.core.pagination import paginate
 
 def _check_measurement_access(
     device: Device,
@@ -18,6 +19,8 @@ def get_device_measurements(
     sensor_type: str | None = None,
     start: datetime | None = None,
     end: datetime | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ):
     device = _get_device_or_404(device_id, db)
     _check_measurement_access(device, user)
@@ -38,7 +41,7 @@ def get_device_measurements(
             Measurement.recorded_at <= end
         )    
 
-    return query.all()
+    return paginate(query, page, size)
 
 def get_all_measurements(
     user: User,
@@ -47,6 +50,8 @@ def get_all_measurements(
     sensor_type: str | None = None,
     start: datetime | None = None,
     end: datetime | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ):
     query = db.query(Measurement).join(Device)
     if user.role != "admin":
@@ -66,7 +71,7 @@ def get_all_measurements(
         query = query.filter(
             Measurement.recorded_at <= end
         )    
-    return query.all()
+    return paginate(query, page, size)
 
 def get_measurement_by_id(
     id: int, 

@@ -5,6 +5,7 @@ from app.schemas.alert import AlertPatch
 from datetime import datetime
 from typing import Literal
 from app.services.device import _get_device_or_404
+from app.core.pagination import paginate
 
 def _check_alert_access(
     device: Device, 
@@ -31,6 +32,8 @@ def get_all_alerts(
     status: Literal["unread", "read", "resolved"] | None = None,
     start: datetime | None = None,
     end: datetime | None = None,    
+    page: int = 1, 
+    size: int = 20,     
 ):
     query = db.query(Alert).join(Device)
     if user.role != "admin":
@@ -57,7 +60,7 @@ def get_all_alerts(
         query = query.filter(
             Alert.triggered_at <= end
         )    
-    return query.all()
+    return paginate(query, page, size)    
 
 def get_alert_by_id(
     id: int, 

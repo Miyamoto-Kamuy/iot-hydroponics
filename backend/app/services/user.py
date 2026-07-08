@@ -6,6 +6,7 @@ from app.core.exceptions import not_found, forbidden
 from app.models import User
 from app.schemas.user import UserPatch, UserAdminPatch
 from app.core.security import hash_password
+from app.core.pagination import paginate
 
 def _get_user_or_404(
     id: int, 
@@ -22,6 +23,8 @@ def get_all_users(
     role: Literal["admin", "operator", "viewer"] | None = None,
     start: datetime | None = None,
     end: datetime | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ):    
     query = db.query(User)
     if role:
@@ -31,7 +34,7 @@ def get_all_users(
     if end:
         query = query.filter(User.created_at <= end)
 
-    return query.all()
+    return paginate(query, page, size)
 
 def get_user_by_id(
     id: int,

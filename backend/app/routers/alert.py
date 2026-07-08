@@ -8,12 +8,13 @@ from app.core.deps import get_current_user, require_role
 from app.models import User, Device, Alert
 from typing import Literal
 from datetime import datetime
+from app.schemas.pagination import PaginateResponse
 
 router = APIRouter(prefix="/alerts", tags=["alerts"])
 
 @router.get(
     "/",
-    response_model=list[AlertResponse]
+    response_model=PaginateResponse[AlertResponse]
 )
 def get_alerts(
     user: User = Depends(get_current_user), 
@@ -23,8 +24,10 @@ def get_alerts(
     status: Literal["unread", "read", "resolved"] | None = None,
     start: datetime | None = None,
     end: datetime | None = None, 
+    page: int = 1, 
+    size: int = 20,     
 ):
-    return get_all_alerts(user, db, device_id, sensor_type, status, start, end)
+    return get_all_alerts(user, db, device_id, sensor_type, status, start, end, page, size)
 
 @router.get(
     "/{id}",

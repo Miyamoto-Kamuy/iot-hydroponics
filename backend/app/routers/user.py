@@ -8,12 +8,13 @@ from app.core.deps import get_current_user, require_role
 from app.models import User
 from typing import Literal
 from datetime import datetime
+from app.schemas.pagination import PaginateResponse
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 @router.get(
     "/", 
-    response_model=list[UserResponse]
+    response_model=PaginateResponse[UserResponse]
 )
 def get_users(
     user: User = Depends(require_role("admin")), 
@@ -21,8 +22,10 @@ def get_users(
     role: Literal['admin', 'operator', 'viewer'] | None = None, 
     start: datetime | None = None, 
     end: datetime | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ):
-    return get_all_users(user, db, role, start, end)
+    return get_all_users(user, db, role, start, end, page, size)
 
 @router.get(
     "/me", 

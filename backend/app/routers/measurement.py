@@ -7,12 +7,13 @@ from app.services.measurement import get_device_measurements, get_all_measuremen
 from app.core.deps import get_current_user, require_role
 from app.models import User, Device
 from datetime import datetime
+from app.schemas.pagination import PaginateResponse
 
 router = APIRouter()
 
 @router.get(
     "/devices/{device_id}/measurements", 
-    response_model=list[MeasurementResponse]
+    response_model=PaginateResponse[MeasurementResponse]
 )
 def get_measurements_with_device_id(
     device_id: int,
@@ -21,12 +22,14 @@ def get_measurements_with_device_id(
     sensor_type: str | None = None,
     start: datetime | None = None,
     end: datetime | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ):
-    return get_device_measurements(device_id, user, db, sensor_type, start, end)
+    return get_device_measurements(device_id, user, db, sensor_type, start, end, page, size)
 
 @router.get(
     "/measurements", 
-    response_model=list[MeasurementResponse]
+    response_model=PaginateResponse[MeasurementResponse]
 )
 def get_measurements(
     user: User = Depends(get_current_user),
@@ -35,8 +38,10 @@ def get_measurements(
     sensor_type: str | None = None,
     start: datetime | None = None,
     end: datetime | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ):
-    return get_all_measurements(user, db, device_id, sensor_type, start, end)
+    return get_all_measurements(user, db, device_id, sensor_type, start, end, page, size)
 
 @router.get(
     "/measurements/{id}", 

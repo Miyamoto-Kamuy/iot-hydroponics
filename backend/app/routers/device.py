@@ -8,12 +8,13 @@ from app.core.deps import get_current_user, require_role
 from app.models import User, Device
 from typing import Literal
 from datetime import datetime
+from app.schemas.pagination import PaginateResponse
 
 router = APIRouter(prefix="/devices", tags=["devices"])
 
 @router.get(
     "/",
-    response_model=list[DeviceResponse], 
+    response_model=PaginateResponse[DeviceResponse], 
 ) 
 def get_devices(
     user: User = Depends(get_current_user),     
@@ -23,8 +24,10 @@ def get_devices(
     start: datetime | None = None,
     end: datetime | None = None,
     created_by: int | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ):
-    return get_all_devices(user, db, location, status, start, end, created_by)
+    return get_all_devices(user, db, location, status, start, end, created_by, page, size)
 
 @router.get(
     "/{id}",

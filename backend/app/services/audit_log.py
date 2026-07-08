@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from app.core.exceptions import not_found, forbidden
 from app.models import AuditLog, User
 from datetime import datetime
+from app.core.pagination import paginate
 
 def _check_audit_log_access(
     user: User,
@@ -20,6 +21,8 @@ def get_all_audit_logs(
     performed_by: int | None = None,
     start: datetime | None = None,
     end: datetime | None = None,
+    page: int = 1, 
+    size: int = 20, 
 ): 
     query = db.query(AuditLog)
     if user.role != "admin":
@@ -43,7 +46,7 @@ def get_all_audit_logs(
         query = query.filter(
             AuditLog.performed_at <= end
         )   
-    return query.all()
+    return paginate(query, page, size)
 
 def get_audit_log_by_id(
     id: int,
