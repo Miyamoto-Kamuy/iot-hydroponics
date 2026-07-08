@@ -4,6 +4,7 @@ venv/
 
 # 環境變數
 .env
+.env.docker
 
 # Python 編譯檔
 __pycache__/

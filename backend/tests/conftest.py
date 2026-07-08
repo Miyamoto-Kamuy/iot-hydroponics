@@ -15,7 +15,6 @@ def engine():
         connect_args={"check_same_thread": False}, 
         poolclass=StaticPool
     )
-    print(f"\n使用的資料庫：{engine.url}")
     Base.metadata.create_all(engine)
     yield engine
     Base.metadata.drop_all(engine)
