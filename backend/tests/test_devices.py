@@ -30,7 +30,7 @@ def test_get_devices_admin(client, admin_token, operator_token):
         headers={"Authorization": f"Bearer {admin_token}"}
     )
     assert response.status_code == 200
-    assert len(response.json()) >= 2
+    assert len(response.json()["data"]) >= 2
 
 def test_get_devices_operator(client, admin_token, operator_token):
     client.post(
@@ -48,4 +48,4 @@ def test_get_devices_operator(client, admin_token, operator_token):
         headers={"Authorization": f"Bearer {operator_token}"}
     )
     assert response.status_code == 200
-    assert len(response.json()) == 1
+    assert len(response.json()["data"]) == 1
