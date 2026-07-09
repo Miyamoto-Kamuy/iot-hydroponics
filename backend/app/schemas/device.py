@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Literal, Optional
 
@@ -10,9 +10,7 @@ class DeviceResponse(BaseModel):
     last_seen_at: datetime | None
     created_at: datetime
     created_by: int
-
-    class Config:
-        from_attributes = True
+    model_config=ConfigDict(from_attributes=True)    
 
 class DeviceCreate(BaseModel):
     name: str

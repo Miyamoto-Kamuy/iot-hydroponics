@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional, Literal
+
 
 class AlertResponse(BaseModel):
     id: int
@@ -9,9 +10,8 @@ class AlertResponse(BaseModel):
     status: str
     triggered_at: datetime
     device_id: int
-
-    class Cofig:
-        from_attributes: True
+    model_config=ConfigDict(from_attributes=True)
+        
 
 class AlertPatch(BaseModel):    
     status: Optional[Literal["unread", "read", "resolved"]] = None

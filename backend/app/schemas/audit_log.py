@@ -1,6 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
-from typing import Literal, Optional
 
 class AudiLogResponse(BaseModel):
     id: int
@@ -12,6 +11,4 @@ class AudiLogResponse(BaseModel):
     error_detail: str | None
     performed_at: datetime
     performed_by: int | None
-
-    class Config:
-        from_attributes = True
+    model_config=ConfigDict(from_attributes=True)
