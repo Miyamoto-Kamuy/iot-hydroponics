@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
-class AudiLogResponse(BaseModel):
+class AuditLogResponse(BaseModel):
     id: int
     action: str
     resource: str

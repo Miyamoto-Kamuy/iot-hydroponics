@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.audit_log import AudiLogResponse
+from app.schemas.audit_log import AuditLogResponse
 from app.services.audit_log import get_all_audit_logs, get_audit_log_by_id
 from app.core.deps import get_current_user
 from app.models import User
@@ -13,7 +13,7 @@ router = APIRouter(prefix="/audit-logs", tags=["audit-logs"])
 
 @router.get(
     "/", 
-    response_model=PaginateResponse[AudiLogResponse]
+    response_model=PaginateResponse[AuditLogResponse]
 )
 def get_audit_logs(
     user: User = Depends(get_current_user), 
@@ -32,7 +32,7 @@ def get_audit_logs(
 
 @router.get(
     "/{id}", 
-    response_model=AudiLogResponse
+    response_model=AuditLogResponse
 )
 def get_audit_log(
     id: int,
