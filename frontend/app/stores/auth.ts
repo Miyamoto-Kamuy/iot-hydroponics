@@ -1,4 +1,4 @@
-import { type LoginResponse, type LoginRequest, type UserResponse } from "~/types/user"
+import { type LoginResponse, type LoginRequest, type UserResponse, type UserCreate } from "~/types/user"
 
 export const useAuthStore = defineStore('auth', () => {
     const api = useApi()
@@ -28,11 +28,18 @@ export const useAuthStore = defineStore('auth', () => {
             }
         }
     }
+    const register = async(credentials: UserCreate) => {
+        await api<UserResponse>('/auth/register', {
+            method: 'POST', 
+            body: credentials
+        })
+        await login({ email: credentials.email, password: credentials.password})
+    }
     const isAuthenticated = computed(() => !!token.value)
 
     return {
         token, user, 
-        login, logout, initAuth, 
+        login, logout, initAuth, register,
         isAuthenticated
     }
 })
