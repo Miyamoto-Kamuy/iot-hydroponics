@@ -31,7 +31,7 @@
         <div class="flex justify-center w-full gap-8">
             <UButton variant="link" 
                 class="cursor-pointer" 
-                @click.stop="handleSwitchAuth">
+                @click="handleSwitchAuth">
                 {{ isLoginPage ? '前往註冊' : '回到登入' }}
             </UButton>
             <UButton variant="link" class="cursor-pointer" v-if="isLoginPage">忘記密碼</UButton>            

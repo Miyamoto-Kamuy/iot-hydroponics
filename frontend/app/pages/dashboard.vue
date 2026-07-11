@@ -1,6 +1,6 @@
 <template>
-    <div>
-
+    <div class="bg-white">
+        123456
     </div>
 </template>
 
