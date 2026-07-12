@@ -25,7 +25,7 @@
             </button>
         </div>
     </aside>
-    <main class="min-h-screen flex flex-col overflow-auto p-6 ml-14">
+    <main class="h-screen flex flex-col overflow-hidden p-6 ml-14">
         <header class="flex items-end w-full gap-8 mb-6">
             <UIcon class="w-10 h-10" :name="currentNavItem?.icon" />
             <h1 class="text-4xl font-bold text-default">{{ currentNavItem?.label }}</h1>

@@ -1,11 +1,11 @@
 <template>
-    <div class="flex-1 grid grid-cols-3 gap-2">
-        <div class="grid grid-rows-3 gap-2">
-            <DashboardDeviceStatusGrid class="row-span-2"
+    <div class="flex-1 grid grid-cols-3 gap-2 overflow-hidden">
+        <div class="grid grid-rows-3 gap-2 overflow-hidden">
+            <DashboardDeviceStatusGrid class="row-span-2 overflow-hidden"
                 @select-device="selectedDeviceId = $event" />
-            <DashboardAlertList />
+            <DashboardAlertList class="overflow-hidden" />
         </div>
-        <DashboardSensorChart class="col-span-2"
+        <DashboardSensorChart class="col-span-2 overflow-hidden"
             :device-id="selectedDeviceId" />
     </div>
 </template>

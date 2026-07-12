@@ -5,7 +5,7 @@ export const useSensorChart = (deviceId: Ref<number | null>) => {
     ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend)    
     type SensorDataset = {
         label: string
-        data: { x: string, y: number[] }
+        data: { x: string, y: number }[]
         borderColor: string
     }
     const authStore = useAuthStore()    
@@ -59,6 +59,7 @@ export const useSensorChart = (deviceId: Ref<number | null>) => {
 
     const wsUrl = computed(() => {
         if(!deviceId.value) return undefined
+        console.log(deviceId.value)
 
         return `ws://localhost:8000/ws/devices/${deviceId.value}?token=${token.value}`
     })
@@ -84,6 +85,13 @@ export const useSensorChart = (deviceId: Ref<number | null>) => {
         } catch(e) {
             console.error('JSON parse error:', e)
         }     
+    })
+    watch(deviceId, () => {
+        chartData.value.datasets.forEach((d: SensorDataset) => {
+            d.data = []
+        })
+        triggerRef(chartData)
+        chartKey.value++
     })
 
     return {
