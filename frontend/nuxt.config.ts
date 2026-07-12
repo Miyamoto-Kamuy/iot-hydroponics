@@ -32,5 +32,11 @@ export default defineNuxtConfig({
 
   imports: {
     dirs: ['composables', 'composables/**']
+  }, 
+
+  vite: {
+    optimizeDeps: {
+      include: ['zod']
+    }
   }
 })

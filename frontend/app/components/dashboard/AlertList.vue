@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-green-500 w-full h-full">
+    <div class="bg-inverted w-full h-full rounded">
 
     </div>
 </template>
