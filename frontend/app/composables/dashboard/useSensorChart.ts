@@ -58,8 +58,7 @@ export const useSensorChart = (deviceId: Ref<number | null>) => {
     })
 
     const wsUrl = computed(() => {
-        if(!deviceId.value) return undefined
-        console.log(deviceId.value)
+        if(!deviceId.value) return undefined        
 
         return `ws://localhost:8000/ws/devices/${deviceId.value}?token=${token.value}`
     })

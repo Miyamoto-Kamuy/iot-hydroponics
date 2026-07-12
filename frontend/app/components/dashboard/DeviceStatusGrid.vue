@@ -4,7 +4,7 @@
              @click="selectDevice(device.id)"
              class="p-2 rounded bg-[#1da1f2] cursor-pointer"
              :class="selectedDeviceId === device.id ? 'bg-[#1da1f2]' : 'bg-blue-200'">
-            <div>狀態</div>
+            <div>{{ device.status }}</div>
             <div class="flex">
                 <p>{{ device.name }}</p>
                 <p>{{ device.location }}</p>
@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+    //fetchDevice暫時使用size: 100, 之後考慮後端改為size=-1, size=all取全部或討論其他方式
     import { useIntervalFn } from '@vueuse/core'
     const deviceStore = useDeviceStore()
     const { devices } = storeToRefs(deviceStore)
@@ -26,7 +27,7 @@
     }
 
     onMounted(async () => {
-        await deviceStore.fetchDevices()
+        await deviceStore.fetchDevices({ size: 100 })
         const firstDevice = devices.value?.[0]        
         if(firstDevice) {
             emit('select-device', firstDevice.id)
@@ -34,7 +35,7 @@
     })
 
     useIntervalFn(async () => {
-        await deviceStore.fetchDevices()
+        await deviceStore.fetchDevices({ size: 100 })
     }, 30000)
 </script>
 
