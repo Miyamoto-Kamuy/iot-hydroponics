@@ -45,7 +45,7 @@ def get_alert(
     response_model=AlertResponse, 
     dependencies=[Depends(require_role("admin", "operator"))]
 )
-def update_device(
+def update_alert(
     id: int, 
     data: AlertPatch, 
     user: User = Depends(get_current_user), 
@@ -57,7 +57,7 @@ def update_device(
     "/{id}", 
     dependencies=[Depends(require_role("admin"))]
 )
-def delete_device(
+def delete_alert(
     id: int, 
     user: User = Depends(get_current_user), 
     db: Session = Depends(get_db) 
