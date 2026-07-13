@@ -1,4 +1,4 @@
-import { type DeviceResponse, type DeviceCreate } from '~/types/device'
+import { type DeviceResponse, type DeviceCreate, type DevicePatch } from '~/types/device'
 import { type PaginateResponse } from '~/types/pagination'
 
 export const useDeviceStore = defineStore('device', () => {
@@ -38,9 +38,20 @@ export const useDeviceStore = defineStore('device', () => {
         })
         if(devices.value) devices.value.push(response)
     }
+    const updateDevice = async(id: number, data: DevicePatch) => {        
+        const response: DeviceResponse = await api(`/devices/${id}`, {
+            method: 'PATCH', 
+            body: data
+        })
+        currentDevice.value = response
+    }
+    const deleteDevice = async(id: number) => {        
+        await api(`/devices/${id}`, { method: 'DELETE' })
+        currentDevice.value = null
+    }
 
     return {
         devices, currentDevice, total,
-        fetchDevices, fetchDevice, createDevice
+        fetchDevices, fetchDevice, createDevice, updateDevice, deleteDevice
     }
 })
