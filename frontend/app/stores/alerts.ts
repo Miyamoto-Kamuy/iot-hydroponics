@@ -3,11 +3,29 @@ import { type PaginateResponse } from '~/types/pagination'
 
 export const useAlertStore = defineStore('alert', () => {
     const alerts = ref<AlertResponse[] | null>(null)    
+    const total = ref(0)
     const currentAlert = ref<AlertResponse | null>(null)    
     const api = useApi()
-    const fetchAlerts = async () => {
-        const response: PaginateResponse<AlertResponse> = await api('/alerts')
+    const fetchAlerts = async ({
+        page = 1,
+        size = 20,
+        device_id,
+        sensor_type,
+        status,
+        start,
+        end,
+    }: {
+        page?: number,
+        size?: number,
+        device_id?: number,
+        sensor_type?: 'temperature' | 'humidity' | 'ph' | 'water_level',
+        status?: "unread" | "read" | "resolved",
+        start?: string,
+        end?: string,
+    } = {}) => {
+        const response: PaginateResponse<AlertResponse> = await api('/alerts', { params: { page, size, device_id, sensor_type, status, start, end }})
         alerts.value = response.data
+        total.value = response.total
     }
     const fetchAlert = async (id: number) => {        
         const response: AlertResponse = await api(`/alerts/${id}`)
@@ -25,7 +43,7 @@ export const useAlertStore = defineStore('alert', () => {
     }
 
     return {
-        alerts, currentAlert, 
+        alerts, currentAlert, total, 
         fetchAlerts, fetchAlert, markAsRead
     }
 })
