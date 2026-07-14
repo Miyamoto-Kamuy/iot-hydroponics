@@ -31,19 +31,19 @@ export const useAlertStore = defineStore('alert', () => {
         const response: AlertResponse = await api(`/alerts/${id}`)
         currentAlert.value = response
     }
-    const markAsRead = async (id: number) => {
+    const updateAlertStatus = async (id: number, status: 'read' | 'resolved') => {
         await api(`alerts/${id}`, {
             method: 'PATCH', 
-            body: { status: 'read' } as AlertPatch
+            body: { status } as AlertPatch
         })
         if(alerts.value) {
             const alert = alerts.value.find(a => a.id === id)
-            if(alert) alert.status = 'read'
+            if(alert) alert.status = status
         }
     }
 
     return {
         alerts, currentAlert, total, 
-        fetchAlerts, fetchAlert, markAsRead
+        fetchAlerts, fetchAlert, updateAlertStatus
     }
 })

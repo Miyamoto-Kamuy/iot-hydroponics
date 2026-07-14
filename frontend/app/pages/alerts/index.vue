@@ -9,19 +9,20 @@
             :items="statusOptions"
             value-key="value"
             label-key="label" />
-            <!-- <UInput class="min-w-40" v-model="filterData.device_id" /> -->
             <UButton @click="handleClearData()">清除</UButton>                               
         </div>
+        <AlertsAlertDetailModal v-if="selectedAlert"
+            :alert="selectedAlert" 
+            v-model:open="isModalOpen" />
         <div class="flex-1 flex flex-col gap-2 overflow-auto">
             <div v-for="alert in alerts" :key="alert.id"              
              class="p-2 rounded bg-[#1da1f2] cursor-pointer"
-             @click="console.log('open detail modal')">
-                <div>{{ alert.status }}</div>
-                <div class="flex">
-                    <p>{{ alert.sensor_type }}</p>
-                    <p>{{ alert.message }}</p>
-                    <p v-if="user?.role === 'admin'">{{ alert.device_id }}</p>
-                    <p>{{ formatDate(alert.triggered_at) ?? '--' }}</p>
+             @click="openModal(alert)">
+                <div :class="alert.status === 'unread' ? 'text-red-400' : 'text-green-400'">{{ alert.status }}</div>
+                <div class="flex space-x-2 items-center">
+                    <p class="w-24 shrink-0">{{ alert.sensor_type }}</p>
+                    <p class="font-bold flex-1 truncate">{{ alert.message }}</p>                
+                    <p class="w-50 shrink-0 text-right">{{ formatDate(alert.triggered_at) ?? '--' }}</p>
                 </div>
             </div>
         </div>
@@ -31,9 +32,14 @@
     </div>
 </template>
 
-<script setup lang="ts">    
-    const authStore = useAuthStore()
-    const { user } = storeToRefs(authStore)
+<script setup lang="ts">
+    import type { AlertResponse } from '~/types/alert'        
+    const isModalOpen = ref(false)
+    const selectedAlert = ref<AlertResponse | null>(null)    
+    const openModal = (alert: AlertResponse) => {
+        selectedAlert.value = alert
+        isModalOpen.value = true
+    }
     const {
         alerts, total, filterData, currentPage, size, sensorTypeOptions, statusOptions, handleClearData
     } = useAlertList()    

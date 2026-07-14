@@ -5,7 +5,7 @@
         </div>
         <div class="flex flex-col gap-2 p-2 overflow-y-auto">
             <div v-for="alert in unreadAlerts" :key="alert.id" 
-                 @click="alertStore.markAsRead(alert.id)"
+                 @click="alertStore.updateAlertStatus(alert.id, 'read')"
                  class="p-2 bg-[#1da1f2] rounded cursor-pointer">
                 <p>{{ alert.status }}</p>
                 <div class="flex">
