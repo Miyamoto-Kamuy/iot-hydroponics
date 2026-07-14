@@ -1,4 +1,4 @@
-export interface AudiLogResponse {
+export interface AuditLogResponse {
     id: number
     action: string
     resource: string
