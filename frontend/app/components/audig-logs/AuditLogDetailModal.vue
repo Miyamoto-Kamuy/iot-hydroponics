@@ -7,10 +7,10 @@
                         <p class="w-24 shring-0 text-muted">{{ info.label }}</p>
 
                         <pre v-if="info.contentKey === 'detail'" class="text-xs overflow-auto">
-                            {{ info.format ? info.format(props.log?.[info.contentKey]) : props.log?.[info.contentKey] }}
+                            {{ info.format ? info.format(props.log?.[info.contentKey]) : props.log?.[info.contentKey] ?? '--' }}
                         </pre>
                         <p v-else>
-                            {{ info.format ? info.format(props.log?.[info.contentKey]) : props.log?.[info.contentKey] }}
+                            {{ info.format ? info.format(props.log?.[info.contentKey]) : props.log?.[info.contentKey] ?? '--' }}
                         </p>
                     </div>
                 </div>     
