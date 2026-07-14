@@ -26,6 +26,9 @@
         </div>
     </aside>
     <main class="h-screen flex flex-col overflow-hidden p-6 ml-14">
+        <div v-if="isLoading" class="fixed inset-0 z-[100] bg-black/30 flex items-center justify-center">
+            <div class="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin"></div>
+        </div>
         <header class="flex items-end w-full gap-8 mb-6">
             <UIcon class="w-10 h-10" :name="currentNavItem?.icon" />
             <h1 class="text-4xl font-bold text-default">{{ currentNavItem?.label }}</h1>
@@ -37,6 +40,7 @@
 <script setup lang="ts">
     const authStore = useAuthStore()
     const route = useRoute()
+    const isLoading = useState('globalLoading')
     const navItems = computed(() => [
         { icon: 'i-lucide-layout-dashboard', label: '即時監控', to: '/dashboard' },
         { icon: 'i-lucide-cpu', label: '設備管理', to: '/devices' },
