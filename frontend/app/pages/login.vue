@@ -12,7 +12,7 @@
                 v-model="data.email" />
             </UFormField>
             <UFormField label="密碼" name="password">
-                <UInput class="w-full" 
+                <UInput type="password" class="w-full" 
                 placeholder="請輸入密碼..."
                 v-model="data.password" />
             </UFormField>

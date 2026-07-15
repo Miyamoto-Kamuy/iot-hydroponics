@@ -32,7 +32,7 @@ export const useUserStore = defineStore('user', () => {
         const response: UserResponse = await api(`/users/${id}`)
         currentUser.value = response
     }    
-    const updateMe = async(id: number, data: UserPatch) => {        
+    const updateMe = async(data: UserPatch) => {        
         const response: UserResponse = await api(`/users/me`, {
             method: 'PATCH', 
             body: data
