@@ -1,4 +1,4 @@
-export const useApi = () => {
+export const useApi = (option?: { silent?: boolean }) => {
     const authStore = useAuthStore()
     const config = useRuntimeConfig()
     const toast = useToast()
@@ -7,17 +7,17 @@ export const useApi = () => {
     return $fetch.create({
         baseURL: config.public.apiBase, 
         onRequest({ options }) {
-            isLoading.value = true
+            if(!option?.silent) isLoading.value = true
             if(authStore.token) {
                 options.headers = new Headers(options.headers as HeadersInit);
                 options.headers.set('Authorization',  `Bearer ${authStore.token}`)                
             }
         }, 
         onResponse(){
-            isLoading.value = false
+            if(!option?.silent) isLoading.value = false
         },
         onResponseError({ request, response }) {
-            isLoading.value = false
+            if(!option?.silent) isLoading.value = false
             if(response.status === 401) {
                 if(request.toString().includes('/auth/login')) return
                 authStore.logout()

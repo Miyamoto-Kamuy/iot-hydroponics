@@ -32,18 +32,26 @@ export const useAlertStore = defineStore('alert', () => {
         currentAlert.value = response
     }
     const updateAlertStatus = async (id: number, status: 'read' | 'resolved') => {
-        await api(`alerts/${id}`, {
-            method: 'PATCH', 
-            body: { status } as AlertPatch
-        })
-        if(alerts.value) {
-            const alert = alerts.value.find(a => a.id === id)
-            if(alert) alert.status = status
+        const silentApi = useApi({ silent: true })
+        const alert = alerts.value?.find(a => a.id === id)
+        const previousStatus = alert?.status
+
+        if(alert) alert.status = status
+        try {
+            await silentApi(`/alerts/${id}`, {
+                method: 'PATCH', 
+                body: { status } as AlertPatch
+            })
+        } catch {
+            if(alert && previousStatus) alert.status = previousStatus
         }
+    }
+    const clearAlertsByDevice = (deviceId: number) => {
+        if(alerts.value) alerts.value = alerts.value.filter(a => a.device_id !== deviceId)
     }
 
     return {
         alerts, currentAlert, total, 
-        fetchAlerts, fetchAlert, updateAlertStatus
+        fetchAlerts, fetchAlert, updateAlertStatus, clearAlertsByDevice
     }
 })

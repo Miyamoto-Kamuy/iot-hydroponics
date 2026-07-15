@@ -1,4 +1,14 @@
 import { z } from 'zod';    
+
+export const loginSchema = z.object({
+    email: z.email('請輸入有效的email'), 
+    password: z.string().min(6, '密碼至少6個字元')
+})
+export const registerSchema = z.object({
+    email: z.email('請輸入有效的email'), 
+    password: z.string().min(6, '密碼至少6個字元'), 
+    role: z.enum(['operator', 'viewer'])
+})
 export const useLoginForm = () => {
     const authStore = useAuthStore()    
     const toast = useToast()
@@ -7,16 +17,7 @@ export const useLoginForm = () => {
         email: '', 
         password: '',
         role: 'viewer' as 'operator' | 'viewer'
-    })
-    const loginSchema = z.object({
-        email: z.email('請輸入有效的email'), 
-        password: z.string().min(6, '密碼至少6個字元')
-    })
-    const registerSchema = z.object({
-        email: z.email('請輸入有效的email'), 
-        password: z.string().min(6, '密碼至少6個字元'), 
-        role: z.enum(['operator', 'viewer'])
-    })
+    })    
     const schema = computed(() => isLoginPage.value ? loginSchema : registerSchema)    
     const options=[
         { label: '操作者', value: 'operator' },

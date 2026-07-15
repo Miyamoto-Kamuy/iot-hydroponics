@@ -48,6 +48,9 @@ export const useDeviceStore = defineStore('device', () => {
     const deleteDevice = async(id: number) => {        
         await api(`/devices/${id}`, { method: 'DELETE' })
         currentDevice.value = null
+
+        const alertStore = useAlertStore()
+        alertStore.clearAlertsByDevice(id)
     }
 
     return {
