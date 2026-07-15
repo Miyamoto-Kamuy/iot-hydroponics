@@ -9,6 +9,8 @@ export const useDeviceList = () => {
     })        
     const currentPage = ref(1)
     const size = ref(20)
+    const isLoading = ref(false)
+    const isEmpty = computed(() => !devices.value || devices.value.length === 0)
     
     const options=[
         { label: '全部', value: undefined },    
@@ -20,13 +22,18 @@ export const useDeviceList = () => {
         filterData.value.location = ''
         filterData.value.status = undefined
     }
-    const fetchWithFilters = useDebounceFn(async () => {                        
-        await deviceStore.fetchDevices({
-            page: currentPage.value, 
-            size: size.value,
-            location: filterData.value.location || undefined, 
-            status: filterData.value.status
-        })
+    const fetchWithFilters = useDebounceFn(async () => {   
+        isLoading.value = true
+        try{
+            await deviceStore.fetchDevices({
+                page: currentPage.value, 
+                size: size.value,
+                location: filterData.value.location || undefined, 
+                status: filterData.value.status
+            })
+        } finally {
+            isLoading.value = false
+        }        
     }, 500)
     
     watch(filterData, async () => {
@@ -36,10 +43,15 @@ export const useDeviceList = () => {
     watch(currentPage, fetchWithFilters) 
     
     onMounted(async () => {
-        await deviceStore.fetchDevices()
+        isLoading.value = true
+        try {
+            await deviceStore.fetchDevices()
+        } finally {
+            isLoading.value = false
+        }
     })
 
     return {
-        devices, total, filterData, currentPage, size, options, handleClearData
+        devices, total, isLoading, isEmpty,filterData, currentPage, size, options, handleClearData
     }
 }
