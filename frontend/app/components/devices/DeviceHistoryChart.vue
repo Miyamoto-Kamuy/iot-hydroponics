@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-inverted w-full h-full rounded p-4 flex flex-col">
+    <div class="bg-inverted w-full min-h-64 lg:h-full rounded p-4 flex flex-col">
         <UTabs :items="tabItems" v-model="selectedTab" calss="mb-4" />
-        <div class="flex-1">
+        <div class="flex-1 h-64 lg:h-full">
             <Line :key="chartKey" :data="currentChartData" :options="chartOptions" />
         </div>
     </div>

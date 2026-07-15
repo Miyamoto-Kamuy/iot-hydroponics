@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col flex-1 overflow-hidden">        
-        <div class="flex gap-2 ml-auto mb-4 shrink-0">
-            <UInput class="min-w-40" v-model="filterData.location" />
-            <USelect class="min-w-40" v-model="filterData['status']"
+        <div class="flex flex-wrap gap-2 mb-4 shrink-0">
+            <UInput class="min-w-40" placeholder="請輸入設備地點" v-model="filterData.location" />
+            <USelect class="min-w-40" placeholder="請選擇設備狀態" v-model="filterData['status']"
                 :items="options"
                 value-key="value"
                 label-key="label" />
@@ -20,11 +20,13 @@
                 <div v-for="device in devices" :key="device.id"              
                  class="p-2 rounded bg-[#1da1f2] cursor-pointer"
                  @click="navigateTo(`/devices/${device.id}`)">
-                    <div>{{ device.status }}</div>
-                    <div class="flex">
-                        <p>{{ device.name }}</p>
-                        <p>{{ device.location }}</p>
-                        <p>{{ formatDate(device.last_seen_at) ?? '--' }}</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col gap-1">
+                            <p class="font-bold">{{ device.name }}</p>
+                            <p class="font-sm">{{ device.location }}</p>
+                            <p class="font-sm">{{ device.status }}</p>
+                        </div>
+                        <p class="text-sm shrink-0 ml-2">{{ formatDate(device.last_seen_at) ?? '--' }}</p>
                     </div>
                 </div>
             </template>
@@ -40,7 +42,3 @@
         devices, total, filterData, isLoading, isEmpty, currentPage, size, options, handleClearData
     } = useDeviceList()    
 </script>
-
-<style scoped>
-
-</style>

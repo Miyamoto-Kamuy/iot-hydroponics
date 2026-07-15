@@ -1,30 +1,30 @@
 <template>
     <div>
         <div class="flex flex-col">
-            <div class="flex flex-col gap-5 p-4" v-if="!isEdit">                
+            <div class="flex flex-col gap-2 md:gap-5 p-4" v-if="!isEdit">                
                 <div class="flex flex-col gap-1">
-                    <p>設備名稱</p>
-                    <p>{{ currentDevice?.name }}</p>
+                    <p class="text-sm">設備名稱</p>
+                    <p class="font-bold">{{ currentDevice?.name }}</p>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p>設備地點</p>
-                    <p>{{ currentDevice?.location }}</p>
+                    <p class="text-sm">設備地點</p>
+                    <p class="font-bold">{{ currentDevice?.location }}</p>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p>設備狀態</p>
-                    <p>{{ currentDevice?.status }}</p>                    
+                    <p class="text-sm">設備狀態</p>
+                    <p class="font-bold">{{ currentDevice?.status }}</p>                    
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p>上次查看時間</p>
-                    <p>{{ formatDate(currentDevice?.last_seen_at) }}</p>                    
+                    <p class="text-sm">上次查看時間</p>
+                    <p class="font-bold">{{ formatDate(currentDevice?.last_seen_at) }}</p>                    
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p>設備建立時間</p>
-                    <p>{{ formatDate(currentDevice?.created_at) }}</p>                    
+                    <p class="text-sm">設備建立時間</p>
+                    <p class="font-bold">{{ formatDate(currentDevice?.created_at) }}</p>                    
                 </div>
                 <div class="flex flex-col gap-1" v-if="user?.role === 'admin'">
-                    <p>建立者</p>
-                    <p>{{ currentDevice?.created_by }}</p>                    
+                    <p class="text-sm">建立者</p>
+                    <p class="font-bold">{{ currentDevice?.created_by }}</p>                    
                 </div>
                 <div class="flex gap-2">
                     <UButton class="cursor-pointer" @click="startEdit">編輯</UButton>

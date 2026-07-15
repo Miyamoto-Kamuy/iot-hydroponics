@@ -8,7 +8,7 @@
             <div class="flex">
                 <p>{{ device.name }}</p>
                 <p>{{ device.location }}</p>
-                <p>{{ device.last_seen_at ?? '--' }}</p>
+                <p>{{ formatDate(device.last_seen_at) ?? '--' }}</p>
             </div>
         </div>
     </div>
@@ -31,6 +31,7 @@
         const firstDevice = devices.value?.[0]        
         if(firstDevice) {
             emit('select-device', firstDevice.id)
+            selectedDeviceId.value = firstDevice.id
         }
     })
 
@@ -38,7 +39,3 @@
         await deviceStore.fetchDevices({ size: 100 })
     }, 30000)
 </script>
-
-<style scoped>
-
-</style>

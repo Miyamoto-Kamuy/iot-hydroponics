@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col flex-1 overflow-hidden">
         <div class="flex gap-2 ml-auto mb-4 shrink-0">            
-            <USelect class="min-w-40" v-model="filterData['role']"
+            <USelect class="min-w-40" placeholder="請選擇使用者角色" v-model="filterData['role']"
                 :items="options"
                 value-key="value"
                 label-key="label" />
