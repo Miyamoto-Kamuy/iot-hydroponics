@@ -1,8 +1,9 @@
 <template>
-    <aside class="fixed left-0 top-0 h-full z-50 
-        w-14 hover:w-48 transition-all duration-300 bg-gray-900 overflow-hidden
-        flex flex-col bg-inverted">
-        <div class="flex items-center gap-4 px-4 py-5 mb-4 border-b border-gray-700 whitespace-nowrap">
+    <aside :class="['fixed left-0 top-0 h-full z-50 transition-all duration-300 bg-gray-900 overflow-hidden flex flex-col bg-inverted', isOpen ? 'w-48' : 'w-14']" 
+        @mouseenter="isOpen = true"
+        @mouseleave="isOpen = false">
+        <div class="flex items-center gap-4 px-4 py-5 mb-4 border-b border-gray-700 whitespace-nowrap" 
+            @click="toggleSidebar">
             <UIcon :name="'i-lucide-leaf'" class="w-6 h-6 shrink-0 text-green-400" />
             <span class="text-default font-extrabold font-xl">IoT Hydroponics</span>
         </div>
@@ -41,6 +42,8 @@
     const authStore = useAuthStore()
     const route = useRoute()
     const isLoading = useState('globalLoading')
+    const isOpen = ref(false)    
+    const toggleSidebar = () => isOpen.value = !isOpen.value
     const navItems = computed(() => [
         { icon: 'i-lucide-layout-dashboard', label: '即時監控', to: '/dashboard' },
         { icon: 'i-lucide-cpu', label: '設備管理', to: '/devices' },
@@ -58,7 +61,3 @@
     }
     
 </script>
-
-<style scoped>
-
-</style>

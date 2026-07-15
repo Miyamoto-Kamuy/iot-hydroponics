@@ -75,4 +75,9 @@
         await userStore.updateUser(props.user.id, { role: editRole.value })
         open.value = false        
     }
+    watch(open, (newVal) => {
+        if(!newVal) {
+            cancelEdit()
+        }
+    })
 </script>
