@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col flex-1 overflow-hidden">
         <div class="mb-4 shrink-0 cursor-pointer">
-            <UButton class="cursor-pointer" variant="link" @click="navigateTo('/devices')">
+            <UButton class="cursor-pointer text-[var(--color-text-primary)]" variant="link" @click="navigateTo('/devices')">
                 ← 返回設備列表
             </UButton>
         </div>

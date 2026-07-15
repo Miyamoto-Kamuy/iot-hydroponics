@@ -9,16 +9,16 @@
             :items="statusOptions"
             value-key="value"
             label-key="label" />
-            <UButton @click="handleClearData()">清除</UButton>                               
+            <UButton class="bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]" @click="handleClearData()">清除</UButton>                               
         </div>
         <AlertsAlertDetailModal v-if="selectedAlert"
             :alert="selectedAlert" 
             v-model:open="isModalOpen" />
         <div class="flex-1 flex flex-col gap-2 overflow-auto">
             <div v-for="alert in alerts" :key="alert.id"              
-             class="p-2 rounded bg-[#1da1f2] cursor-pointer"
+             class="p-2 rounded cursor-pointer bg-[var(--color-card)] border border-[var(--color-border)]"
              @click="openModal(alert)">
-                <div :class="alert.status === 'unread' ? 'text-red-400' : 'text-green-400'">{{ alert.status }}</div>
+                <div :class="alert.status === 'unread' ? 'text-[var(--color-error)]' : 'text-[var(--color-accent)]'">{{ alert.status }}</div>
                 <div class="flex space-x-2 items-center">
                     <p class="w-24 shrink-0">{{ alert.sensor_type }}</p>
                     <p class="font-bold flex-1 truncate">{{ alert.message }}</p>                

@@ -1,7 +1,7 @@
 <template>
     <UModal v-model:open="isOpen">
         <template #default>
-            <UButton>新增設備</UButton>
+            <UButton class="bg-[var(--color-accent)] text-[var(--color-text-primary)]">新增設備</UButton>
         </template>
         <template #content>
             <UForm :schema="schema" :state="addData" @submit="handleCreate" class="space-y-4 p-4">

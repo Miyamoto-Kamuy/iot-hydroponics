@@ -15,4 +15,21 @@
   --color-green-800: #016538;
   --color-green-900: #0A5331;
   --color-green-950: #052E16;
+
+}
+:root {
+  --color-bg: #3A4030; 
+  --color-card: #475040; 
+  --color-border: #4D5545;
+  --color-card-hover: #475040;
+  --color-text-primary: #FEFAE0;
+  --color-text-secondary: #B8B49A;
+  --color-text-secondary-hover: #A8A88A;
+  --color-accent: #4A7C59;
+  --color-accent-hover: #5A9C6E;
+  --color-success: #6BCB77;
+  --color-warning: #E07A5F;
+  --color-error: #C1666B;
+  --color-error-hover: #A85458;
+  --color-sidebar: #252B20;
 }

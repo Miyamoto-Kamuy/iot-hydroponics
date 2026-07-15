@@ -24,17 +24,27 @@ export const useChartBase = () => {
         maintainAspectRatio: false,
         parsing: { xAxisKey: 'x', yAxisKey: 'y' },
         plugins: {
-            legend: { display: true, position: 'top' as const },
+            legend: { display: false },
             tooltip: { enabled: true }
         },
-        scales: { y: { beginAtZero: false } }
+        scales: { 
+            x: {
+                grid: { color: 'rgba(254, 250, 224, 0.1)'}, 
+                ticks: { color: '#FEFAE0'}
+            },
+            y: { 
+                beginAtZero: false, 
+                grid: { color: 'rgba(254, 250, 224, 0.1)'}, 
+                ticks: { color: '#FEFAE0'}
+            } 
+        }
     })
     const chartData = shallowRef<any>({
         datasets: [
-            { label: 'temperature', data: [], borderColor: 'red' },
-            { label: 'humidity', data: [], borderColor: 'blue' },
-            { label: 'ph', data: [], borderColor: 'green' },
-            { label: 'water_level', data: [], borderColor: 'purple' },
+            { label: 'temperature', data: [], borderColor: '#FF6B6B' },
+            { label: 'humidity', data: [], borderColor: '#4ECDC4' },
+            { label: 'ph', data: [], borderColor: '#FFE66D' },
+            { label: 'water_level', data: [], borderColor: '#6BB5FF' },
         ]
     })
 

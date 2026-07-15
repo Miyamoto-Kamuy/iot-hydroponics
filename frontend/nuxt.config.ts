@@ -41,5 +41,10 @@ export default defineNuxtConfig({
         'zod'
       ]
     }
+  }, 
+
+  colorMode: {
+    preference: 'dark', 
+    fallback: 'dark'
   }
 })

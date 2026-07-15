@@ -3,40 +3,40 @@
         <div class="flex flex-col">
             <div class="flex flex-col gap-2 md:gap-5 p-4" v-if="!isEdit">                
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm">設備名稱</p>
-                    <p class="font-bold">{{ currentDevice?.name }}</p>
+                    <p class="text-sm text-[var(--color-text-secondary)]">設備名稱</p>
+                    <p class="font-bold text-[var(--color-text-primary)]">{{ currentDevice?.name }}</p>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm">設備地點</p>
-                    <p class="font-bold">{{ currentDevice?.location }}</p>
+                    <p class="text-sm text-[var(--color-text-secondary)]">設備地點</p>
+                    <p class="font-bold text-[var(--color-text-primary)]">{{ currentDevice?.location }}</p>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm">設備狀態</p>
-                    <p class="font-bold">{{ currentDevice?.status }}</p>                    
+                    <p class="text-sm text-[var(--color-text-secondary)]">設備狀態</p>
+                    <p class="font-bold text-[var(--color-text-primary)]">{{ currentDevice?.status }}</p>                    
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm">上次查看時間</p>
-                    <p class="font-bold">{{ formatDate(currentDevice?.last_seen_at) }}</p>                    
+                    <p class="text-sm text-[var(--color-text-secondary)]">上次查看時間</p>
+                    <p class="font-bold text-[var(--color-text-primary)]">{{ formatDate(currentDevice?.last_seen_at) }}</p>                    
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm">設備建立時間</p>
-                    <p class="font-bold">{{ formatDate(currentDevice?.created_at) }}</p>                    
+                    <p class="text-sm text-[var(--color-text-secondary)]">設備建立時間</p>
+                    <p class="font-bold text-[var(--color-text-primary)]">{{ formatDate(currentDevice?.created_at) }}</p>                    
                 </div>
                 <div class="flex flex-col gap-1" v-if="user?.role === 'admin'">
-                    <p class="text-sm">建立者</p>
-                    <p class="font-bold">{{ currentDevice?.created_by }}</p>                    
+                    <p class="text-sm text-[var(--color-text-secondary)]">建立者</p>
+                    <p class="font-bold text-[var(--color-text-primary)]">{{ currentDevice?.created_by }}</p>                    
                 </div>
                 <div class="flex gap-2">
-                    <UButton class="cursor-pointer" @click="startEdit">編輯</UButton>
-                    <UPopover class="cursor-pointer" v-model:open="isDeleteConfirm">                    
-                        <UButton color="error" @click="isDeleteConfirm = true">刪除</UButton>
+                    <UButton class="cursor-pointer bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]" @click="startEdit">編輯</UButton>
+                    <UPopover class="cursor-pointer bg-[var(--color-card)]" v-model:open="isDeleteConfirm">                    
+                        <UButton color="error" class="cursor-pointer bg-[var(--color-error)] hover:bg-[var(--color-error-hover)] text-[var(--color-text-primary)]" @click="isDeleteConfirm = true">刪除</UButton>
     
                         <template #content>
                             <div class="p-4 flex flex-col gap-2">
-                                <p>確定要刪除這台設備嗎？</p>
+                                <p class="text-[var(--color-text-primary)]">確定要刪除這台設備嗎？</p>
                                 <div class="flex gap-2">
-                                    <UButton @click="isDeleteConfirm = false">取消</UButton>
-                                    <UButton color="error" @click="confirmDelete">確認刪除</UButton>
+                                    <UButton class="bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]" @click="isDeleteConfirm = false">取消</UButton>
+                                    <UButton class="bg-[var(--color-error)] hover:bg-[var(--color-error-hover)] text-[var(--color-text-primary)]" color="error" @click="confirmDelete">確認刪除</UButton>
                                 </div>                            
                             </div>
                         </template>
@@ -45,7 +45,7 @@
             </div>
             <UForm v-else :schema="schema" :state="editData" @submit="handleUpdate" class="space-y-4 p-4">                
                 <UFormField label="設備名稱" name="name">
-                    <UInput v-if="isEdit" class="w-full" 
+                    <UInput v-if="isEdit" class="w-full focus-visible:[var(--color-bg)]" 
                     placeholder="請輸入設備名稱..."
                     v-model="editData.name" />
                 </UFormField>
@@ -74,8 +74,8 @@
                     <p>{{ currentDevice?.created_by }}</p>                    
                 </div>
                 <div class="flex gap-2">
-                    <UButton class="cursor-pointer" type="button" @click="cancelEdit">取消</UButton>
-                    <UButton class="cursor-pointer" type="submit">儲存</UButton>
+                    <UButton class="cursor-pointer bg-[var(--color-text-secondary)] hover:bg-[var(--color-text-secondary-hover)] text-[var(--color-text-primary)]" type="button" @click="cancelEdit">取消</UButton>
+                    <UButton class="cursor-pointer bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]" type="submit">儲存</UButton>
                 </div>
             </UForm>
         </div>

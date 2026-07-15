@@ -4,12 +4,12 @@
             <div class="p-4 space-y-4">
                 <div class="flex flex-col gap-2">
                     <div class="flex gap-2" v-for="info in userInfo" :key="info.contentKey">
-                        <p class="w-24 shring-0 text-muted">{{ info.label }}</p>
-                        <p>{{ info.format ? info.format(props.user?.[info.contentKey]) : props.user?.[info.contentKey] }}</p>
+                        <p class="w-24 shring-0 text-sm text-muted">{{ info.label }}</p>
+                        <p class="text-[var(--color-text-primary)]">{{ info.format ? info.format(props.user?.[info.contentKey]) : props.user?.[info.contentKey] }}</p>
                     </div>
                     <div class="flex gap-2">
-                        <p class="w-24 shring-0 text-muted">角色</p>
-                        <p v-if="!isEdit">{{ roleMap[props.user?.role] }}</p>
+                        <p class="w-24 shring-0 text-sm text-muted">角色</p>
+                        <p class="text-[var(--color-text-primary)]" v-if="!isEdit">{{ roleMap[props.user?.role] }}</p>
                         <USelect v-else 
                             v-model="editRole"
                             :items="roleOptions"
@@ -20,16 +20,16 @@
                 </div>     
                 <div class="flex justify-center gap-2">
                     <UButton @click="open = false" 
-                            class="cursor-pointer">返回</UButton>  
+                            class="cursor-pointer bg-[var(--color-text-secondary)] hover:bg-[var(--color-text-secondary-hover)] text-[var(--color-text-primary)]">返回</UButton>  
                     <template v-if="!isEdit">
                         <UButton @click="startEdit" 
-                            class="cursor-pointer">編輯角色</UButton>                                           
+                            class="cursor-pointer bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]">編輯角色</UButton>                                           
                     </template>
                     <template v-else>
                         <UButton @click="cancelEdit" 
-                            class="cursor-pointer">取消</UButton>                                           
+                            class="cursor-pointer bg-[var(--color-text-secondary)] hover:bg-[var(--color-text-secondary-hover)] text-[var(--color-text-primary)]">取消</UButton>                                           
                         <UButton @click="handleUpdateUser" 
-                            class="cursor-pointer">儲存</UButton>                                           
+                            class="cursor-pointer bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]">儲存</UButton>                                           
                     </template>
                 </div>       
             </div>

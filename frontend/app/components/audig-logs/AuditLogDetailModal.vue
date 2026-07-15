@@ -4,19 +4,19 @@
             <div class="p-4 space-y-4">
                 <div class="flex flex-col gap-2">
                     <div class="flex gap-2" v-for="info in auditLogInfo.filter(i => i && (!i.adminOnly || user?.role === 'admin'))" :key="info.contentKey">
-                        <p class="w-24 shring-0 text-muted">{{ info.label }}</p>
+                        <p class="w-24 shring-0 text-sm text-muted">{{ info.label }}</p>
 
-                        <pre v-if="info.contentKey === 'detail'" class="text-xs overflow-auto">
+                        <pre v-if="info.contentKey === 'detail'" class="text-xs overflow-auto text-[var(--color-text-primary)]">
                             {{ info.format ? info.format(props.log?.[info.contentKey]) : props.log?.[info.contentKey] ?? '--' }}
                         </pre>
-                        <p v-else>
+                        <p v-else class="text-[var(--color-text-primary)]">
                             {{ info.format ? info.format(props.log?.[info.contentKey]) : props.log?.[info.contentKey] ?? '--' }}
                         </p>
                     </div>
                 </div>     
                 <div class="flex justify-center gap-2">
                     <UButton @click="open = false" 
-                            class="cursor-pointer">返回</UButton>                     
+                            class="cursor-pointer bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]">返回</UButton>                     
                 </div>       
             </div>
         </template>

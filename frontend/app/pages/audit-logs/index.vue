@@ -6,18 +6,18 @@
                 value-key="value"
                 label-key="label" />
             <UInput class="min-w-40" placeholder="請輸入紀錄資源" v-model="filterData['resource']" />
-            <UButton @click="handleClearData()">清除</UButton>                               
+            <UButton class="bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]" @click="handleClearData()">清除</UButton>                               
         </div>
         <AudigLogsAuditLogDetailModal v-if="selectedAuditLog"
             :log="selectedAuditLog" 
             v-model:open="isModalOpen" />
         <div class="flex-1 flex flex-col gap-2 overflow-auto">
             <div v-for="log in auditLogs" :key="log.id"              
-             class="p-2 rounded bg-[#1da1f2] cursor-pointer"
+             class="p-2 rounded cursor-pointer bg-[var(--color-card)] border border-[var(--color-border)]"
              @click="openModal(log)">
                 <div :class="actionMap[log.action as keyof typeof actionMap]">{{ log.action }}</div>
                 <div class="flex space-x-2 items-center">
-                    <p class="w-24 flex-1 shrink-0">{{ log.resource }}</p>                    
+                    <p class="w-24 flex-1 shrink-0 text-[var(--color-text-primary)]">{{ log.resource }}</p>                    
                     <p class="text-sm shrink-0 text-right">{{ formatDate(log.performed_at) ?? '--' }}</p>
                 </div>
             </div>
@@ -40,8 +40,8 @@
         auditLogs, total, filterData, currentPage, size, actionOptions, handleClearData
     } = useAuditLogList()   
     const actionMap: { CREATE: string, UPDATE: string, DELETE: string} = {
-        CREATE: 'text-green-400', 
-        UPDATE: 'text-yellow-400', 
-        DELETE: 'text-red-400'
+        CREATE: 'text-[var(--color-success)]', 
+        UPDATE: 'text-[#D4A853]', 
+        DELETE: 'text-[var(--color-error)]'
     } 
 </script>

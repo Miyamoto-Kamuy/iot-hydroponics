@@ -1,9 +1,9 @@
 <template>
     <div class="login-page">
-        <h1 class="text-2xl font-bold text-center mb-6">
+        <h1 class="text-2xl font-bold text-center mb-6 text-[var(--color-text-primary)]">
             IoT Hydroponics
         </h1>        
-        <p class="text-center text-gray-500 mb-6">{{ isLoginPage ? '登入您的帳號' : '建立新帳號' }}</p>
+        <p class="text-center text-[var(--color-text-secondary)] mb-6">{{ isLoginPage ? '登入您的帳號' : '建立新帳號' }}</p>
 
         <UForm :schema="schema" :state="data" @submit="onSubmit" class="space-y-4">
             <UFormField label="帳號" name="email">
@@ -24,17 +24,17 @@
                     label-key="label" />
             </UFormField>
 
-            <UButton type="submit" class="w-full justify-center cursor-pointer">
+            <UButton type="submit" class="w-full justify-center cursor-pointer bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text-primary)]">
                 {{ isLoginPage ? '登入' : '註冊' }}
             </UButton>            
         </UForm>      
         <div class="flex justify-center w-full gap-8">
             <UButton variant="link" 
-                class="cursor-pointer" 
+                class="cursor-pointer text-[var(--color-text-primary)] hover:text-[var(--color-accent)]" 
                 @click="handleSwitchAuth">
                 {{ isLoginPage ? '前往註冊' : '回到登入' }}
             </UButton>
-            <UButton variant="link" class="cursor-pointer" v-if="isLoginPage">忘記密碼</UButton>            
+            <!-- <UButton variant="link" class="cursor-pointer text-[var(--color-text-primary)] hover:text-[var(--color-accent)]" v-if="isLoginPage">忘記密碼</UButton>             -->
         </div>
     </div>
 </template>
