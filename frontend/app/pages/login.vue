@@ -5,7 +5,7 @@
         </h1>        
         <p class="text-center text-[var(--color-text-secondary)] mb-6">{{ isLoginPage ? '登入您的帳號' : '建立新帳號' }}</p>
 
-        <UForm :schema="schema" :state="data" @submit="onSubmit" class="space-y-4">
+        <UForm :schema="schema" :state="data" @submit="onSubmit" class="space-y-4" aria-label="登入表單">
             <UFormField label="帳號" name="email">
                 <UInput class="w-full" 
                 placeholder="請輸入帳號..."

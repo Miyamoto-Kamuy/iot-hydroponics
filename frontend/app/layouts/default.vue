@@ -1,5 +1,6 @@
 <template>
     <aside :class="['fixed left-0 top-0 h-full z-50 transition-all duration-300 overflow-hidden flex flex-col bg-[var(--color-sidebar)] border-right border-[var(--color-border)]', isOpen ? 'w-48' : 'w-14']"
+        aria-label="主要導覽"
         @mouseenter="isOpen = true"
         @mouseleave="isOpen = false">
         <div class="flex items-center gap-4 px-4 py-5 mb-4 border-b border-gray-700 whitespace-nowrap" 
@@ -7,7 +8,7 @@
             <UIcon :name="'i-lucide-leaf'" class="w-6 h-6 shrink-0 text-[var(--color-text-primary)]" />
             <span class="text-default font-extrabold font-xl text-[var(--color-text-primary)]">IoT Hydroponics</span>
         </div>
-        <nav class="flex flex-col flex-1">
+        <nav class="flex flex-col flex-1" aria-label="頁面導覽">
             <NuxtLink v-for="item in navItems" :key="item.to"
                 :to="item.to"
                 class="flex items-center gap-4 px-4 py-3
@@ -21,7 +22,7 @@
         <div class="border-t border-gray-700 p-2">
             <button @click="handleLogout" class="flex items-center gap-4 py-3 px-2 w-full
                 text-[var(--color-text-secondary)] hover:text-white hover:bg-[var(--color-border)]
-                transition-colors duration-200 whitespace-nowrap rounded-lg cursor-pointer">
+                transition-colors duration-200 whitespace-nowrap rounded-lg cursor-pointer" aria-label="登出系統">
                 <UIcon name="i-lucide-log-out" class="w-6 h-6 shrink-0" />
                 <span class="font-semibold">登出</span>
             </button>
