@@ -3,15 +3,12 @@ import { useWebSocket } from '@vueuse/core'
 
 export const useSensorChart = (deviceId: Ref<number | null>) => {    
     const { chartKey, selectedTab, tabItems, chartOptions, chartData, currentChartData } = useChartBase()
-    const authStore = useAuthStore()    
-    const { token } = storeToRefs(authStore)    
 
     const wsUrl = computed(() => {
         if(!deviceId.value) return undefined        
-
-        return `ws://localhost:8000/ws/devices/${deviceId.value}?token=${token.value}`
+        return `ws://localhost:8000/ws/devices/${deviceId.value}`
     })
-    const { data } = useWebSocket(wsUrl, {
+    const { data, close } = useWebSocket(wsUrl, {
         autoReconnect: true, 
         immediate: false
     })
@@ -40,6 +37,10 @@ export const useSensorChart = (deviceId: Ref<number | null>) => {
         })
         triggerRef(chartData)
         chartKey.value++
+    })
+
+    onUnmounted(() => {
+        close()
     })
 
     return {
