@@ -11,7 +11,7 @@ class AuditMiddleware(BaseHTTPMiddleware):
         if request.method not in ["POST", "PATCH", "DELETE"]:
             return await call_next(request)
         
-        token = request.headers.get("Authorization", "").replace("Bearer ", "")
+        token = request.cookies.get("token", "")
         payload = verify_access_token(token)
         performed_by = payload.get("user_id") if payload else None
 

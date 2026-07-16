@@ -108,6 +108,35 @@ def viewer_token(engine):
     db.close()
     return token
 
+@pytest.fixture
+def admin_client(db, admin_token):
+    def override_get_db():
+        yield db
+    app.dependency_overrides[get_db] = override_get_db
+    with TestClient(app) as client:        
+        client.cookies.set("token", admin_token)
+        yield client
+    app.dependency_overrides.clear()
+@pytest.fixture
+def operator_client(db, operator_token):
+    def override_get_db():
+        yield db
+    app.dependency_overrides[get_db] = override_get_db
+    with TestClient(app) as client:        
+        client.cookies.set("token", operator_token)
+        yield client
+    app.dependency_overrides.clear()
+    
+@pytest.fixture
+def viewer_client(db, viewer_token):
+    def override_get_db():
+        yield db
+    app.dependency_overrides[get_db] = override_get_db
+    with TestClient(app) as client:                
+        client.cookies.set("token", viewer_token)    
+        yield client
+    app.dependency_overrides.clear()
+
 @pytest.fixture(autouse=True)
 def disable_audit_middleware(db):
     """讓audit middleware使用測試db而不是正式db"""

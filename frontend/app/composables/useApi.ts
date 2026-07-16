@@ -6,12 +6,9 @@ export const useApi = (option?: { silent?: boolean }) => {
 
     return $fetch.create({
         baseURL: config.public.apiBase, 
-        onRequest({ options }) {
+        credentials: 'include',
+        onRequest() {
             if(!option?.silent) isLoading.value = true
-            if(authStore.token) {
-                options.headers = new Headers(options.headers as HeadersInit);
-                options.headers.set('Authorization',  `Bearer ${authStore.token}`)                
-            }
         }, 
         onResponse(){
             if(!option?.silent) isLoading.value = false

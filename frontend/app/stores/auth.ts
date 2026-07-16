@@ -1,30 +1,25 @@
-import { type LoginResponse, type LoginRequest, type UserResponse, type UserCreate } from "~/types/user"
+import { type LoginRequest, type UserResponse, type UserCreate } from "~/types/user"
 
 export const useAuthStore = defineStore('auth', () => {
     const api = useApi()
-    const token = useCookie<string | null>('token', {
-        maxAge: 60 * 60,
-        sameSite: 'strict'
-    })
     const user = ref<UserResponse | null>(null)
     const login = async(credentials: LoginRequest) => {
-        const response = await api<LoginResponse>('/auth/login', {
+        await api<{ message: string }>('/auth/login', {
             method: "POST", 
             body: credentials
-        })
-        token.value = response.access_token    
+        })        
         user.value = await api<UserResponse>('/users/me')    
     }
-    const logout = () => {
-        token.value = null
+    const logout = () => {        
         user.value = null
+        api('/auth/logout', { method: 'POST' })
     }
     const initAuth = async() => {
-        if(token.value && !user.value) {
+        if(!user.value) {
             try {
                 user.value = await api<UserResponse>('/users/me')
             } catch {
-                token.value = null
+                console.log('token expired')
             }
         }
     }
@@ -35,10 +30,10 @@ export const useAuthStore = defineStore('auth', () => {
         })
         await login({ email: credentials.email, password: credentials.password})
     }
-    const isAuthenticated = computed(() => !!token.value)
+    const isAuthenticated = computed(() => !!user.value)
 
     return {
-        token, user, 
+        user, 
         login, logout, initAuth, register,
         isAuthenticated
     }

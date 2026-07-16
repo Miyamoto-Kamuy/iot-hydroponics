@@ -26,8 +26,8 @@ def test_login_success(client):
         "/auth/login",
         json={"email": "testuser@test.com", "password": "testtest"}
     )
-    assert "access_token" in response.json()    
-    assert response.json()["token_type"] == "bearer"
+    assert response.status_code == 200
+    assert "token" in response.cookies
 
 def test_login_failure(client):    
     response = client.post(

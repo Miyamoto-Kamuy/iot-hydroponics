@@ -1,12 +1,11 @@
-import asyncio
-import random
-from datetime import datetime, timezone
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends, Query
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends, Query, Cookie
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Device, Measurement, Alert, User
 from app.core.security import verify_access_token
-from app.core.exceptions import forbidden, not_found
+import asyncio
+import random
+from datetime import datetime, timezone
 
 router = APIRouter()
 
@@ -35,9 +34,13 @@ def _get_current_user_ws(token: str, db: Session) -> User:
 async def device_websocket(
     websocket: WebSocket, 
     device_id: int, 
-    token: str = Query(...),
+    token: str = Cookie(None),
     db: Session = Depends(get_db)
 ):
+    if not token:
+        await websocket.close(code=4001)
+        return
+
     user = _get_current_user_ws(token, db)
     if not user:
         await websocket.close(code=4001)
@@ -91,7 +94,7 @@ async def device_websocket(
             })
 
             sensor_index += 1
-            await asyncio.sleep(5)
+            await asyncio.sleep(3)
 
     except WebSocketDisconnect:
         device.status = "offline"
@@ -100,9 +103,13 @@ async def device_websocket(
 @router.websocket("/ws/dashboard")
 async def devices_websocket(
     websocket: WebSocket,     
-    token: str = Query(...),
+    token: str = Cookie(None),
     db: Session = Depends(get_db)
 ):
+    if not token:
+        await websocket.close(code=4001)
+        return
+
     user = _get_current_user_ws(token, db)
     if not user:
         await websocket.close(code=4001)
