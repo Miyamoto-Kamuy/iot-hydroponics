@@ -3,6 +3,7 @@ import { type LoginRequest, type UserResponse, type UserCreate } from "~/types/u
 export const useAuthStore = defineStore('auth', () => {
     const api = useApi()
     const user = ref<UserResponse | null>(null)
+    const isLoggingOut = ref(false)
     const login = async(credentials: LoginRequest) => {
         await api<{ message: string }>('/auth/login', {
             method: "POST", 
@@ -11,8 +12,10 @@ export const useAuthStore = defineStore('auth', () => {
         user.value = await api<UserResponse>('/users/me')    
     }
     const logout = async () => {        
+        isLoggingOut.value = true
         await api('/auth/logout', { method: 'POST' })
         user.value = null
+        isLoggingOut.value = false
     }
     const initAuth = async() => {
         if(!user.value) {
@@ -33,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
     const isAuthenticated = computed(() => !!user.value)
 
     return {
-        user, 
+        user, isLoggingOut,
         login, logout, initAuth, register,
         isAuthenticated
     }
