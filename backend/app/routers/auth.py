@@ -35,7 +35,8 @@ def login(
         key="token", 
         value=result["access_token"], 
         httponly=True,
-        samesite="strict",
+        samesite="none",
+        secure=True,
         max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60
     )
     return {"message": "logged in successfully"}
