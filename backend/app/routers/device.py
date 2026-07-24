@@ -13,7 +13,7 @@ from app.schemas.pagination import PaginateResponse
 router = APIRouter(prefix="/devices", tags=["devices"])
 
 @router.get(
-    "/",
+    "",
     response_model=PaginateResponse[DeviceResponse], 
 ) 
 def get_devices(
@@ -41,7 +41,7 @@ def get_device(
     return get_device_by_id(id, user, db)
 
 @router.post(
-    "/",
+    "",
     response_model=DeviceResponse
 )
 def create_device(

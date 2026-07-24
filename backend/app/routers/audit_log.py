@@ -12,7 +12,7 @@ from app.schemas.pagination import PaginateResponse
 router = APIRouter(prefix="/audit-logs", tags=["audit-logs"])
 
 @router.get(
-    "/", 
+    "", 
     response_model=PaginateResponse[AuditLogResponse]
 )
 def get_audit_logs(

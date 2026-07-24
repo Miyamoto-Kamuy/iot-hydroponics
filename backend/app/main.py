@@ -10,7 +10,8 @@ from app.core.limiter import limiter
 
 app = FastAPI(
     title="IoT Hydroponics Monitor", 
-    version="0.1.0"
+    version="0.1.0", 
+    redirect_slashes=False
 )
 
 app.add_middleware(

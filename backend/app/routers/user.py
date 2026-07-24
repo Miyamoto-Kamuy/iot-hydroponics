@@ -13,7 +13,7 @@ from app.schemas.pagination import PaginateResponse
 router = APIRouter(prefix="/users", tags=["users"])
 
 @router.get(
-    "/", 
+    "", 
     response_model=PaginateResponse[UserResponse]
 )
 def get_users(

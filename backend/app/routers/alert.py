@@ -13,7 +13,7 @@ from app.schemas.pagination import PaginateResponse
 router = APIRouter(prefix="/alerts", tags=["alerts"])
 
 @router.get(
-    "/",
+    "",
     response_model=PaginateResponse[AlertResponse]
 )
 def get_alerts(
