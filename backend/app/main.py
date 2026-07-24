@@ -15,7 +15,11 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware, 
-    allow_origins=["http://localhost:3000"], 
+    allow_origins=[
+        "http://localhost:3000", 
+        "https://iot-hydroponics-qqfvjtb9t-poan.vercel.app", 
+        "https://iot.poanchen.com"
+    ], 
     allow_credentials=True,
     allow_methods=["*"], 
     allow_headers=["*"]
