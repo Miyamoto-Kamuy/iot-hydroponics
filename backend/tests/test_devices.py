@@ -21,7 +21,7 @@ def test_get_devices_admin(admin_client, operator_client):
         "/devices", 
         json={"name": "Operator Device", "location": "溫室B"}
     )
-    response = admin_client.get("/devices/")
+    response = admin_client.get("/devices")
     assert response.status_code == 200
     assert len(response.json()["data"]) >= 2
 
