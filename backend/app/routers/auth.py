@@ -44,5 +44,10 @@ def login(
 
 @router.post("/auth/logout")
 def logout(response: Response): 
-    response.delete_cookie("token")
+    response.delete_cookie(
+        key="token",
+        domain=".poanchen.com", 
+        samesite="None", 
+        secure=True
+    )
     return {"message": "logged out successfully"}

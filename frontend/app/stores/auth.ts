@@ -10,9 +10,9 @@ export const useAuthStore = defineStore('auth', () => {
         })        
         user.value = await api<UserResponse>('/users/me')    
     }
-    const logout = () => {        
+    const logout = async () => {        
+        await api('/auth/logout', { method: 'POST' })
         user.value = null
-        api('/auth/logout', { method: 'POST' })
     }
     const initAuth = async() => {
         if(!user.value) {

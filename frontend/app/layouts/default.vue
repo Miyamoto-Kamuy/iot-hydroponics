@@ -59,8 +59,8 @@
         { icon: 'i-lucide-user', label: '個人資料', to: '/profile' },        
     ])
     const currentNavItem = computed(() => navItems.value.find(item => item.to === route.path))
-    const handleLogout = () => {
-        authStore.logout()
+    const handleLogout = async () => {
+        await authStore.logout()
         navigateTo('/login')
     }
     
