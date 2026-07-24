@@ -4,9 +4,14 @@ import { useWebSocket } from '@vueuse/core'
 export const useSensorChart = (deviceId: Ref<number | null>) => {    
     const { chartKey, selectedTab, tabItems, chartOptions, chartData, currentChartData } = useChartBase()
 
+    const config = useRuntimeConfig()
+    const wsBase = config.public.apiBase
+        .replace('https://', 'wss://')
+        .replace('http://', 'ws://')
+
     const wsUrl = computed(() => {
         if(!deviceId.value) return undefined        
-        return `ws://localhost:8000/ws/devices/${deviceId.value}`
+        return `${wsBase}/ws/devices/${deviceId.value}`
     })
     const { data, close } = useWebSocket(wsUrl, {
         autoReconnect: true, 
