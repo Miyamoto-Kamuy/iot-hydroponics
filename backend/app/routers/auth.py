@@ -37,6 +37,7 @@ def login(
         httponly=True,
         samesite="None",
         secure=True,
+        domain=".poanchen.com",
         max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60
     )
     return {"message": "logged in successfully"}
