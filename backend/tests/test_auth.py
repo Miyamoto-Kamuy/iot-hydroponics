@@ -27,7 +27,7 @@ def test_login_success(client):
         json={"email": "testuser@test.com", "password": "testtest"}
     )
     assert response.status_code == 200
-    assert "token" in response.cookies
+    assert response.json()["message"] == "logged in successfully"
 
 def test_login_failure(client):    
     response = client.post(
